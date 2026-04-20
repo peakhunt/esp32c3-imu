@@ -1,0 +1,8 @@
+# to avoid overwriting NVS, generate hex
+HEX_NAME="esp32_c6_imu_v1.hex"
+
+idf.py merge-bin --format hex -o ${HEX_NAME}
+
+# to flash
+#esptool.py --chip esp32c6 --port /dev/ttyACM0 write_flash 0x0 build/${HEX_NAME}
+#

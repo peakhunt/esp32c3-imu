@@ -1,0 +1,118 @@
+Executing action: monitor
+Running idf_monitor in directory /home/hawk/sandbox/esp32/c6-1.47/imu
+Executing "/home/hawk/.espressif/python_env/idf5.5_py3.12_env/bin/python /home/hawk/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyACM0 -b 115200 --toolchain-prefix riscv32-esp-elf- --target esp32c6 --revision 0 --decode-panic backtrace /home/hawk/sandbox/esp32/c6-1.47/imu/build/imu_demo.elf /home/hawk/sandbox/esp32/c6-1.47/imu/build/bootloader/bootloader.elf -m '/home/hawk/.espressif/python_env/idf5.5_py3.12_env/bin/python' '/home/hawk/esp/esp-idf/tools/idf.py' '-p' '/dev/ttyACM0'"...
+[0;33m--- esp-idf-monitor 1.9.0 on /dev/ttyACM0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+ESP-ROM:esp32c6-20220919
+Build:Sep 19 2022
+rst:0x15 (USB_UART_HPSYS),boot:0x6e (SPI_FAST_FLASH_BOOT)
+Saved PC:0x42031e76
+[0m--- 0x42031e76: [0;33mlv_free[0m[0m at [0;32m/home/hawk/sandbox/esp32/c6-1.47/imu/managed_components/lvgl__lvgl/src/stdlib/lv_mem.c[0m[0m:[1;31m136[0m
+SPIWP:0xee
+mode:DIO, clock div:2
+load:0x40875730,len:0x179c
+load:0x4086b910,len:0xe70
+[0m--- 0x4086b910: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/hawk/esp/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+load:0x4086e610,len:0x31d4
+[0m--- 0x4086e610: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/hawk/esp/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+entry 0x4086b91a
+[0m--- 0x4086b91a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/hawk/esp/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m25[0m
+[0;32mI (23) boot: ESP-IDF v5.5.2 2nd stage bootloader[0m
+[0;32mI (23) boot: compile time Mar 17 2026 15:38:42[0m
+[0;32mI (23) boot: chip revision: v0.1[0m
+[0;32mI (24) boot: efuse block revision: v0.3[0m
+[0;32mI (24) boot.esp32c6: SPI Speed      : 80MHz[0m
+[0;32mI (24) boot.esp32c6: SPI Mode       : DIO[0m
+[0;32mI (24) boot.esp32c6: SPI Flash Size : 4MB[0m
+[0;32mI (25) boot: Enabling RNG early entropy source...[0m
+[0;32mI (25) boot: Partition Table:[0m
+[0;32mI (25) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (26) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (26) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (27) boot:  2 factory          factory app      00 00 00010000 002f0000[0m
+[0;32mI (27) boot:  3 storage          Unknown data     01 82 00300000 000f0000[0m
+[0;32mI (28) boot: End of partition table[0m
+[0;32mI (28) esp_image: segment 0: paddr=00010020 vaddr=42100020 size=42770h (272240) map[0m
+[0;32mI (80) esp_image: segment 1: paddr=00052798 vaddr=40800000 size=0d880h ( 55424) load[0m
+[0;32mI (92) esp_image: segment 2: paddr=00060020 vaddr=42000020 size=fcac0h (1034944) map[0m
+[0;32mI (287) esp_image: segment 3: paddr=0015cae8 vaddr=4080d880 size=10fbch ( 69564) load[0m
+[0;32mI (302) esp_image: segment 4: paddr=0016daac vaddr=4081e840 size=03b60h ( 15200) load[0m
+[0;32mI (313) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (313) boot: Disabling RNG early entropy source...[0m
+[0;32mI (314) cpu_start: Unicore app[0m
+[0;32mI (323) cpu_start: Pro cpu start user code[0m
+[0;32mI (323) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (323) app_init: Application information:[0m
+[0;32mI (323) app_init: Project name:     imu_demo[0m
+[0;32mI (323) app_init: App version:      1.0.0[0m
+[0;32mI (324) app_init: Compile time:     Mar 17 2026 18:21:39[0m
+[0;32mI (324) app_init: ELF file SHA256:  57673cff1...[0m
+[0;32mI (324) app_init: ESP-IDF:          v5.5.2[0m
+[0;32mI (324) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (325) efuse_init: Max chip rev:     v0.99 [0m
+[0;32mI (325) efuse_init: Chip rev:         v0.1[0m
+[0;32mI (325) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (325) heap_init: At 40837CE0 len 00044930 (274 KiB): RAM[0m
+[0;32mI (326) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM[0m
+[0;32mI (326) heap_init: At 50000000 len 00003FE8 (15 KiB): RTCRAM[0m
+[0;32mI (327) spi_flash: detected chip: generic[0m
+[0;32mI (327) spi_flash: flash io: dio[0m
+[0;32mI (327) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (328) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (329) main_task: Started on CPU0[0m
+[0;32mI (329) main_task: Calling app_main()[0m
+[0;32mI (329) example: Free heap 267KB[0m
+[0;32mI (338) example: Example configured to blink addressable LED![0m
+[0;32mI (339) imu_task: Starting IMU task...[0m
+[0;32mI (339) mpu9250_i2c: Trying to Recover[0m
+[0;32mI (340) mpu9250_i2c: Bus State: SCL 1, SDA 1[0m
+[0;32mI (344) mpu9250_i2c: Trying to Recover Complete[0m
+[0;33mW (344) i2c.master: Please check pull-up resistances whether be connected properly. Otherwise unexpected behavior would happen. For more detailed information, please read docs[0m
+[0;32mI (345) mpu9250: MPU9250 who am I: 73[0m
+[0;32mI (367) mpu9250: ASA calibration: B7 B8 AC[0m
+[0;32mI (488) LVGL: Starting LVGL task[0m
+[0;32mI (520) temperature_sensor: Range [-10°C ~ 80°C], error < 1°C[0m
+[0;32mI (690) example: Free heap after init 220KB[0m
+[0;32mI (694) pp: pp rom version: 5b8dcfa[0m
+[0;32mI (695) net80211: net80211 rom version: 5b8dcfa[0m
+[0;32mI (697) wifi:wifi driver task: 4084b468, prio:23, stack:6656, core=0[0m
+[0;32mI (703) wifi:wifi firmware version: ee91c8c[0m
+[0;32mI (703) wifi:wifi certification version: v7.0[0m
+[0;32mI (703) wifi:config NVS flash: enabled[0m
+[0;32mI (703) wifi:config nano formatting: disabled[0m
+[0;32mI (703) wifi:mac_version:HAL_MAC_ESP32AX_761,ut_version:N, band mode:0x1[0m
+[0;32mI (704) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (704) wifi:Init management short buffer num: 32[0m
+[0;32mI (705) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (705) wifi:Init static tx FG buffer num: 2[0m
+[0;32mI (705) wifi:Init static rx buffer size: 1700 (rxctrl:92, csi:512)[0m
+[0;32mI (705) wifi:Init static rx buffer num: 10[0m
+[0;32mI (706) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (707) wifi_init: rx ba win: 6[0m
+[0;32mI (708) wifi_init: accept mbox: 6[0m
+[0;32mI (708) wifi_init: tcpip mbox: 32[0m
+[0;32mI (708) wifi_init: udp mbox: 6[0m
+[0;32mI (708) wifi_init: tcp mbox: 6[0m
+[0;32mI (708) wifi_init: tcp tx win: 5760[0m
+[0;32mI (708) wifi_init: tcp rx win: 5760[0m
+[0;32mI (709) wifi_init: tcp mss: 1440[0m
+[0;32mI (709) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (709) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (709) wifi_init: WiFi SLP IRAM OP enabled[0m
+[0;32mI (713) phy_init: phy_version 343,b513b46,Nov 14 2025,16:34:12[0m
+[0;33mW (779) wifi:ACK_TAB0   :0x   90a0b, QAM16:0x9 (24Mbps), QPSK:0xa (12Mbps), BPSK:0xb (6Mbps)[0m
+[0;33mW (779) wifi:CTS_TAB0   :0x   90a0b, QAM16:0x9 (24Mbps), QPSK:0xa (12Mbps), BPSK:0xb (6Mbps)[0m
+[0;33mW (780) wifi:(agc)0x600a7128:0xd20ca800, min.avgNF:0xce->0xd2(dB), RCalCount:0xca, min.RRssi:0x800(-128.00)[0m
+[0;32mI (781) wifi:11ax coex: WDEVAX_PTI0(0x55777555), WDEVAX_PTI1(0x00003377).[0m
+
+[0;32mI (781) wifi:mode : softAP (f0:f5:bd:2b:ec:09)[0m
+[0;32mI (782) wifi:Total power save buffer number: 16[0m
+[0;32mI (782) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (783) wifi:Init max length of beacon: 752/752[0m
+[0;32mI (784) esp_netif_lwip: DHCP server started on interface WIFI_AP_DEF with IP: 192.168.4.1[0m
+[0;32mI (786) wifi softAP: wifi_init_softap finished. SSID:imu password: channel:1[0m
+[0;32mI (786) mount: Initializing SPIFFS[0m
+[0;32mI (927) mount: Partition size: total: 896321, used: 502[0m
+[0;32mI (927) web_server: Starting server on port: '80'[0m
+[0;32mI (930) web_server: Registering URI handlers[0m
