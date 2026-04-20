@@ -42,10 +42,10 @@ An IMU (Inertial Measurement Unit) orientation tracking project built on the **E
 | :--- | :--- |
 | **QMC5883L I2C SDA (IMU)** | GPIO 5 |
 | **QMC5883L I2C SCL (IMU)** | GPIO 4 |
-| **MPU6400 IMU nCS** | GPIO 3 |
-| **MPU6400 IMU SCK** | GPIO 0 |
-| **MPU6400 IMU MISO** | GPIO 1 |
-| **MPU6400 IMU MOSI** | GPIO 2 |
+| **MPU6500 IMU nCS** | GPIO 3 |
+| **MPU6500 IMU SCK** | GPIO 0 |
+| **MPU6500 IMU MISO** | GPIO 1 |
+| **MPU6500 IMU MOSI** | GPIO 2 |
 | **RGB LED** | GPIO 10 |
 
 ### Building and Flashing
