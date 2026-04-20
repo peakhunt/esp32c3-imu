@@ -4,14 +4,20 @@
       <div class="card-content px-5 py-8">
         
         <!-- THE MISSION -->
-        <div class="has-text-centered mb-6 pb-6">
-          <p class="title is-1 has-text-black has-text-weight-black tracking-tighter mb-2" style="font-size: 5.5rem; line-height: 0.85;">
-            NO MICHAEL SLOPFT
-          </p>
-          <p class="is-family-monospace is-size-7 has-text-grey uppercase tracking-widest">
-            AHRS_PRECISION_ENGINE • 1000HZ_SPI • ESP32-C3
-          </p>
-        </div>
+      <div class="has-text-centered mb-6 pb-6">
+        <!-- Increased line-height to 1.1 for readability and used Bulma's weight helper -->
+        <p class="title is-1 has-text-black has-text-weight-black mb-4"
+           style="font-size: 5.5rem; line-height: 1;">
+          MBS CLass <span style="position: relative; top: -0.15em;">@</span>
+        </p>
+
+        <!-- Replaced tracking-widest with standard CSS letter-spacing -->
+        <p class="is-family-monospace is-size-7 has-text-grey is-uppercase" 
+           style="letter-spacing: 0.2em;">
+          AHRS_PRECISION_ENGINE • 1000HZ_SPI • ESP32-C3
+        </p>
+      </div>
+
 
         <!-- THE ULTIMATE CREDIT -->
         <div class="columns is-centered mt-6">
