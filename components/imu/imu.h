@@ -97,7 +97,10 @@ typedef struct
   float                    update_rate;
 } imu_t;
 
-extern void imu_init(imu_t* imu, imu_engine_config_t* cfg, float hz);
+extern void imu_init(imu_t* imu, imu_engine_config_t* cfg, float hz,
+    imu_sensor_align_t a_align,
+    imu_sensor_align_t g_align,
+    imu_sensor_align_t m_align);
 extern void imu_update(imu_t* imu);
 
 extern void imu_gyro_calibration_start(imu_t* imu);

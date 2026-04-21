@@ -208,7 +208,10 @@ imu_update_normal(imu_t* imu)
 //
 ////////////////////////////////////////////////////////////////////////////////
 void
-imu_init(imu_t* imu, imu_engine_config_t* cfg, float hz)
+imu_init(imu_t* imu, imu_engine_config_t* cfg, float hz,
+    imu_sensor_align_t a_align,
+    imu_sensor_align_t g_align,
+    imu_sensor_align_t m_align)
 {
   memset(imu, 0, sizeof(imu_t));
 
@@ -223,9 +226,9 @@ imu_init(imu_t* imu, imu_engine_config_t* cfg, float hz)
   imu->cal.mag_scale[1] = 
   imu->cal.mag_scale[2] = 4096;
 
-  imu->accel_align  = imu_sensor_align_cw_90_flip;
-  imu->gyro_align   = imu_sensor_align_cw_90_flip; 
-  imu->mag_align    = imu_sensor_align_cw_90_flip;
+  imu->accel_align  = a_align;
+  imu->gyro_align   = g_align; 
+  imu->mag_align    = m_align;
 
   imu->update_rate  = hz;
 

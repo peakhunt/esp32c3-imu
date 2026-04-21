@@ -170,7 +170,11 @@ imu_task_init_all(void)
 
   xSemaphoreTake(_mutex, portMAX_DELAY);
 
-  imu_init(&_imu, &e_cfg, TARGET_SAMPLE_RATE);
+  imu_init(&_imu, &e_cfg, TARGET_SAMPLE_RATE,
+      imu_sensor_align_cw_90_flip,
+      imu_sensor_align_cw_90_flip,
+      imu_sensor_align_cw_90_flip);
+
   mpu6500_init(&_mpu6500, MPU6500_Accelerometer_8G, MPU6500_Gyroscope_1000s, &_imu.lsb); 
   qmc5883l_init(&_mag, &_imu.lsb.mag_lsb);
 
