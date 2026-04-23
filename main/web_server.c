@@ -791,6 +791,7 @@ ws_broadcast_imu_update(imu_telemetry_pkt_t* pkt)
         if(targ->pkt == NULL)
         {
           ESP_LOGE(TAG, "failed to malloc telemetry %d", fds[i]);
+          free(targ);
           continue;
         }
 
