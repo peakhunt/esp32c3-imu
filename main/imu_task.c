@@ -284,7 +284,7 @@ imu_task_init(void)
   _imu_buf = xQueueCreate(10, sizeof(imu_telemetry_pkt_t));
 
   xTaskCreate(imu_task, "imu_task", 4096, NULL, 15, NULL);
-  xTaskCreate(imu_telemetry_task, "imu_telemetry_task", 1024, NULL, 10, NULL);
+  xTaskCreate(imu_telemetry_task, "imu_telemetry_task", 2048, NULL, 10, NULL);
   xTaskCreate(imu_mag_read_task, "imu_mag_read_task", 1024, NULL, 10, NULL);
 }
 
