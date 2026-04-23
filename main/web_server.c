@@ -727,6 +727,45 @@ ws_imu_handler(httpd_req_t *req)
   return ret;
 }
 
+//
+// this runs in HTTPD task
+//
+struct async_telemetry_arg {
+    httpd_handle_t hd;
+    int fd;
+    imu_telemetry_pkt_t* pkt;
+};
+
+static void
+imu_tx_telemetry_queue_work(void* arg)
+{
+  struct async_telemetry_arg* targ = (struct async_telemetry_arg*)arg;
+
+  httpd_ws_frame_t packet = 
+  {
+    .payload = (uint8_t *)targ->pkt,
+    .len = sizeof(imu_telemetry_pkt_t),
+    .type = HTTPD_WS_TYPE_BINARY,
+    .final = true
+  };
+
+  //
+  // unlike its name, it's actually synchronous
+  // after this function call, we can safely free data buffer
+  //
+  esp_err_t ret = httpd_ws_send_frame_async(targ->hd, targ->fd, &packet);
+  if (ret != ESP_OK)
+  {
+      // The socket is dead or the buffer is a disaster.
+      // HARDCORE MOVE: Kill the socket manually.
+      // This stops the 'Error 11' logs immediately.
+      ESP_LOGW(TAG, "Killing Ghost Client FD: %d", targ->fd);
+      httpd_sess_trigger_close(targ->hd, targ->fd); 
+  }
+  free(targ->pkt);
+  free(targ);
+}
+
 void
 ws_broadcast_imu_update(imu_telemetry_pkt_t* pkt)
 {
@@ -741,22 +780,30 @@ ws_broadcast_imu_update(imu_telemetry_pkt_t* pkt)
       // Only send if the descriptor is actually a WebSocket
       if (httpd_ws_get_fd_info(_server, fds[i]) == HTTPD_WS_CLIENT_WEBSOCKET)
       {
-        httpd_ws_frame_t packet = 
+        struct async_telemetry_arg* targ = malloc(sizeof(struct async_telemetry_arg));
+        if(targ == NULL)
         {
-          .payload = (uint8_t *)pkt,
-          .len = sizeof(imu_telemetry_pkt_t),
-          .type = HTTPD_WS_TYPE_BINARY,
-          .final = true
-        };
-        esp_err_t ret = httpd_ws_send_frame_async(_server, fds[i], &packet);
-        
+          ESP_LOGE(TAG, "failed to malloc targ %d", fds[i]);
+          continue;
+        }
+
+        targ->pkt = malloc(sizeof(imu_telemetry_pkt_t));
+        if(targ->pkt == NULL)
+        {
+          ESP_LOGE(TAG, "failed to malloc telemetry %d", fds[i]);
+          continue;
+        }
+
+        memcpy(targ->pkt, pkt, sizeof(imu_telemetry_pkt_t));
+        targ->hd = _server;
+        targ->fd = fds[i];
+
+        esp_err_t ret = httpd_queue_work(_server, imu_tx_telemetry_queue_work, targ);
         if (ret != ESP_OK)
         {
-            // The socket is dead or the buffer is a disaster.
-            // HARDCORE MOVE: Kill the socket manually.
-            // This stops the 'Error 11' logs immediately.
-            ESP_LOGW(TAG, "Killing Ghost Client FD: %d", fds[i]);
-            httpd_sess_trigger_close(_server, fds[i]); 
+          ESP_LOGE(TAG, "failed to queue telemetry work %d", fds[i]);
+          free(targ->pkt);
+          free(targ);
         }
       }
     }
