@@ -207,7 +207,7 @@ const connectWebSocket = () => {
       )
       
       handleIncomingData(r, p, y, g, a, m)
-      socket.send("!"); // send dummy byte to bypass TCP ack delay
+      // socket.send("!"); // send dummy byte to bypass TCP ack delay
     } catch(e) {
       console.warn("exception while trying to decode data stream")
     }
