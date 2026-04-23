@@ -54,6 +54,13 @@ struct file_server_data
   char scratch[SCRATCH_BUFSIZE];
 };
 
+struct async_telemetry_arg
+{
+  httpd_handle_t hd;
+  int fd;
+  imu_telemetry_pkt_t pkt;
+};
+
 
 static const char* TAG = "web_server";
 static httpd_handle_t _server = NULL;
@@ -691,11 +698,6 @@ ws_imu_handler(httpd_req_t *req)
       ESP_LOGE(TAG, "failed to set socket nodelay");
     }
 
-#if 0
-    int tos = 0xC0; // trick router to think it's high priority voice packet
-    setsockopt(fd, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
-#endif
-      
     return ESP_OK;
   }
 
@@ -730,12 +732,6 @@ ws_imu_handler(httpd_req_t *req)
 //
 // this runs in HTTPD task
 //
-struct async_telemetry_arg {
-    httpd_handle_t hd;
-    int fd;
-    imu_telemetry_pkt_t* pkt;
-};
-
 static void
 imu_tx_telemetry_queue_work(void* arg)
 {
@@ -743,7 +739,7 @@ imu_tx_telemetry_queue_work(void* arg)
 
   httpd_ws_frame_t packet = 
   {
-    .payload = (uint8_t *)targ->pkt,
+    .payload = (uint8_t *)&(targ->pkt),
     .len = sizeof(imu_telemetry_pkt_t),
     .type = HTTPD_WS_TYPE_BINARY,
     .final = true
@@ -762,7 +758,6 @@ imu_tx_telemetry_queue_work(void* arg)
       ESP_LOGW(TAG, "Killing Ghost Client FD: %d", targ->fd);
       httpd_sess_trigger_close(targ->hd, targ->fd); 
   }
-  free(targ->pkt);
   free(targ);
 }
 
@@ -781,21 +776,14 @@ ws_broadcast_imu_update(imu_telemetry_pkt_t* pkt)
       if (httpd_ws_get_fd_info(_server, fds[i]) == HTTPD_WS_CLIENT_WEBSOCKET)
       {
         struct async_telemetry_arg* targ = malloc(sizeof(struct async_telemetry_arg));
+
         if(targ == NULL)
         {
           ESP_LOGE(TAG, "failed to malloc targ %d", fds[i]);
           continue;
         }
 
-        targ->pkt = malloc(sizeof(imu_telemetry_pkt_t));
-        if(targ->pkt == NULL)
-        {
-          ESP_LOGE(TAG, "failed to malloc telemetry %d", fds[i]);
-          free(targ);
-          continue;
-        }
-
-        memcpy(targ->pkt, pkt, sizeof(imu_telemetry_pkt_t));
+        memcpy(&targ->pkt, pkt, sizeof(imu_telemetry_pkt_t));
         targ->hd = _server;
         targ->fd = fds[i];
 
@@ -803,7 +791,6 @@ ws_broadcast_imu_update(imu_telemetry_pkt_t* pkt)
         if (ret != ESP_OK)
         {
           ESP_LOGE(TAG, "failed to queue telemetry work %d", fds[i]);
-          free(targ->pkt);
           free(targ);
         }
       }
