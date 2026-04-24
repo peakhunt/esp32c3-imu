@@ -190,14 +190,14 @@ app_main(void)
 
   configure_led();
 
+  wifi_init();
+  mount_storage("/spiffs");
+  web_server_init();
+
   imu_task_init();
 
   ESP_LOGI(TAG, "Free heap after init %dKB", esp_get_free_internal_heap_size() / 1024);
   xTaskCreatePinnedToCore(stats_task, "stats", 4096, NULL, 3, NULL, tskNO_AFFINITY);
-
-  wifi_init();
-  mount_storage("/spiffs");
-  web_server_init();
 
   while (1)
   {
